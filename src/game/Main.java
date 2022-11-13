@@ -5,7 +5,9 @@ import game.abstractClasses.Enemy;
 import game.enemies.Elf;
 import game.enemies.Goblin;
 import game.player.Player;
+import game.quests.KillGivenAmountOfEnemies;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -45,23 +47,45 @@ public class Main {
         System.out.println("1(zabij 5 goblinow)");
         System.out.println("2(zabij 3 elfy)");
         System.out.println("[Wpisz 1 lub 2]");
-        if ((wybor("1","2")=="1")){
-            Enemy[] goblins = {new Goblin(),new Goblin(), new Goblin(), new Goblin(), new Goblin()};
+        if ((wybor("1","2")=="1")) {
+            KillGivenAmountOfEnemies quest = new KillGivenAmountOfEnemies();
+
+            List<Enemy> enemis = quest.createEnemies(new Goblin(),5);
             System.out.println("Wyruszasz na misje");
-            for (int i = 0; i < goblins.length; i++) {
-                player.walka(goblins[i]);
-            }
+            pressEnter();
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+            for (int i = 0; i < enemis.size(); i++) {
+                System.out.println("__________\n" +
+                        "Przeciwnik : "+ i++ +"/3\n" +
+                        "_________");
+                player.walka(enemis.get(i));
+            } //todo nie dziala to gowno XD
+
         }else {
-            Enemy[] elfs = {new Elf(),new Elf(),new Elf()};
+            KillGivenAmountOfEnemies quest = new KillGivenAmountOfEnemies();
+            List<Enemy> enemis = quest.createEnemies(new Elf(),3);
             System.out.println("Wyruszasz na misje");
-            for (int i = 0; i < elfs.length; i++) {
-                player.walka(elfs[i]);
+            pressEnter();
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+            for (int i = 0; i < enemis.size(); i++) {
+                System.out.println("__________\n" +
+                         "Przeciwnik : "+ i++ +"/3\n" +
+                         "_________");
+                player.walka(enemis.get(i));
             }
         }
-
-
-
-
+//        if ((wybor("1","2")=="1")){
+//            Enemy[] goblins = {new Goblin(),new Goblin(), new Goblin(), new Goblin(), new Goblin()};
+//            System.out.println("Wyruszasz na misje");
+//            for (int i = 0; i < goblins.length; i++) {
+//                player.walka(goblins[i]);
+//            }
+//        }else {
+//            Enemy[] elfs = {new Elf(),new Elf(),new Elf()};
+//            System.out.println("Wyruszasz na misje");
+//            for (int i = 0; i < elfs.length; i++) {
+//                player.walka(elfs[i]);
+//            }
 
     }
 
