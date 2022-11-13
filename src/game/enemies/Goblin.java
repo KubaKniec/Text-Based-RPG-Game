@@ -1,7 +1,7 @@
 package game.enemies;
 
 
-import game.Enemy;
+import game.abstractClasses.Enemy;
 
 public class Goblin extends Enemy {
 

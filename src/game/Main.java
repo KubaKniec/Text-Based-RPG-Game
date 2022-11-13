@@ -1,7 +1,10 @@
 package game;
 
+import game.abstractClasses.Character;
+import game.abstractClasses.Enemy;
 import game.enemies.Elf;
 import game.enemies.Goblin;
+import game.player.Player;
 
 import java.util.Objects;
 import java.util.Scanner;

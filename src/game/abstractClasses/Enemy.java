@@ -1,4 +1,4 @@
-package game;
+package game.abstractClasses;
 
 public abstract class Enemy extends Character{
     public Enemy(String name, int health, int attack, int defense, int gold, int exp) {

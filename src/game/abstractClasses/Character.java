@@ -1,4 +1,4 @@
-package game;
+package game.abstractClasses;
 
 public abstract class Character {
     private String name;

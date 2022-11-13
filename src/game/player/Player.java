@@ -1,11 +1,14 @@
-package game;
+package game.player;
+
+import game.abstractClasses.Character;
+import game.Main;
 
 import java.util.Objects;
 
 
 import static game.Main.wybor;
 
-public class Player extends Character{
+public class Player extends Character {
     private int lvl;
     public Player(String name, int health, int attack, int defense, int gold, int exp) {
         super(name, health, attack, defense, gold, exp);

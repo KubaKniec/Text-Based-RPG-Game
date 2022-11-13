@@ -1,7 +1,6 @@
 package game.enemies;
 
-import game.Character;
-import game.Enemy;
+import game.abstractClasses.Enemy;
 
 public class Golem extends Enemy {
 
