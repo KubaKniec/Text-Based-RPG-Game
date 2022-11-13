@@ -7,86 +7,77 @@ import game.enemies.Goblin;
 import game.player.Player;
 import game.quests.KillGivenAmountOfEnemies;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Stworz swojego bohatera");
-        System.out.println("Na poczatku nadaj imie");
-        System.out.print("imie: ");
-        String name = scanner.next();
-        int strength=0,defense=0;
-        while (strength+defense!=10){
-            System.out.println("_________");
-            System.out.println("Masz do rozdania 10pkt umiejetnosci");
-            System.out.print("sila: ");
-            strength = scanner.nextInt();
-            System.out.print("obrona: ");
-            defense = scanner.nextInt();
-        }
-        Character player = new Player(name,100,strength,defense,0,0);
+        Player player = createPlayer();
 
-        System.out.println("....WPROWADZENIE....");
-        System.out.println("Twoja ksiezniczka zostal porwana, musisz zaplacic okup, aby ja uwolnic");
-        pause(2);
-        System.out.println("Okup wynosi 1000 zlota");
-        pause(2);
         pressEnter();
 
-        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+//        System.out.println("....WPROWADZENIE....");
+//        System.out.println("Twoja ksiezniczka zostal porwana, musisz zaplacic okup, aby ja uwolnic");
+//        pause(2);
+//        System.out.println("Okup wynosi 1000 zlota");
+//        pause(2);
+//        pressEnter();
+
+        clearScrean();
         System.out.println("Dotarles do wioski.");
         pause(2);
         System.out.println("Wchodzisz do tawerny.");
         pause(2);
         System.out.println("Masz do wyboru 2 misje");
-        System.out.println("1(zabij 5 goblinow)");
-        System.out.println("2(zabij 3 elfy)");
+        System.out.println("1(zabij 5 goblinow - 100gold)");
+        System.out.println("2(zabij 3 elfy - 150gold)");
         System.out.println("[Wpisz 1 lub 2]");
+
         if ((wybor("1","2")=="1")) {
             KillGivenAmountOfEnemies quest = new KillGivenAmountOfEnemies();
 
-            List<Enemy> enemis = quest.createEnemies(new Goblin(),5);
+            List<Enemy> enemies = quest.createEnemies(new Goblin(),5);
+            quest.setReward(100);
             System.out.println("Wyruszasz na misje");
             pressEnter();
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-            for (int i = 0; i < enemis.size(); i++) {
-                System.out.println("__________\n" +
-                        "Przeciwnik : "+ i++ +"/3\n" +
-                        "_________");
-                player.walka(enemis.get(i));
-            } //todo nie dziala to gowno XD
+            clearScrean();
+            boolean shouldIGiveReward = false;
+            for (Enemy enemy : enemies) {
+                if (!(player.walka(enemy))) {
+                    break;
+                }else {
+                    shouldIGiveReward = true;
+                }
+            }
+            if (shouldIGiveReward) {
+                player.setGold(player.getGold() + quest.getReward());
+            }
+
 
         }else {
             KillGivenAmountOfEnemies quest = new KillGivenAmountOfEnemies();
-            List<Enemy> enemis = quest.createEnemies(new Elf(),3);
+            quest.setReward(150);
+            List<Enemy> enemies = quest.createEnemies(new Elf(),3);
             System.out.println("Wyruszasz na misje");
             pressEnter();
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-            for (int i = 0; i < enemis.size(); i++) {
-                System.out.println("__________\n" +
-                         "Przeciwnik : "+ i++ +"/3\n" +
-                         "_________");
-                player.walka(enemis.get(i));
+            clearScrean();
+            boolean shouldIGiveReward = false;
+            for (Enemy enemy : enemies) {
+                if (!(player.walka(enemy))) {
+                    break;
+                }else {
+                    shouldIGiveReward = true;
+                }
+            }
+            if (shouldIGiveReward) {
+                player.setGold(player.getGold() + quest.getReward());
             }
         }
-//        if ((wybor("1","2")=="1")){
-//            Enemy[] goblins = {new Goblin(),new Goblin(), new Goblin(), new Goblin(), new Goblin()};
-//            System.out.println("Wyruszasz na misje");
-//            for (int i = 0; i < goblins.length; i++) {
-//                player.walka(goblins[i]);
-//            }
-//        }else {
-//            Enemy[] elfs = {new Elf(),new Elf(),new Elf()};
-//            System.out.println("Wyruszasz na misje");
-//            for (int i = 0; i < elfs.length; i++) {
-//                player.walka(elfs[i]);
-//            }
 
+        System.out.println(player.getGold());
     }
 
     public static void pause(int time){
@@ -135,5 +126,29 @@ public class Main {
             }
         }
         return null;
+    }
+
+    public static void clearScrean(){
+        for (int i = 0; i < 50; ++i) System.out.println();
+    }
+
+    public static Player createPlayer(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Stworz swojego bohatera");
+        System.out.println("Na poczatku nadaj imie");
+        System.out.print("imie: ");
+        String name = scanner.next();
+        int attack=0,defense=0;
+        try{
+            System.out.println("Sila: ");
+            attack = scanner.nextInt();
+            System.out.println("Obrona: ");
+            defense = scanner.nextInt();
+        }catch (InputMismatchException e){
+            clearScrean();
+            System.out.println("[Cos poszlo nie tak]");
+            createPlayer();
+        }
+        return new Player(name,attack,defense);
     }
 }

@@ -2,6 +2,7 @@ package game.player;
 
 import game.abstractClasses.Character;
 import game.Main;
+import game.abstractClasses.Quest;
 
 import java.util.Objects;
 
@@ -10,8 +11,15 @@ import static game.Main.wybor;
 
 public class Player extends Character {
     private int lvl;
-    public Player(String name, int health, int attack, int defense, int gold, int exp) {
-        super(name, health, attack, defense, gold, exp);
+
+    public Player(String name, int attack, int defense){
+        super.setName(name);
+        super.setHealth(100);
+        super.setAttack(attack);
+        super.setDefense(defense);
+        super.setGold(0);
+        super.setExp(0);
+        this.lvl = 0;
     }
 
     public int getLvl() {
@@ -23,6 +31,7 @@ public class Player extends Character {
     }
 
     public void lvlUp(){
+        Main.clearScrean();
         System.out.println("! LVL UP !");
         System.out.println("Odnowiono hp i zwiekszono je o 10");
         setHealth(100+10*lvl);
@@ -38,11 +47,13 @@ public class Player extends Character {
         else {
             System.out.println("COS POSZLO NIE TAK");
         }
+        Main.clearScrean();
     }
 
 
     @Override
     public boolean walka(Character enemy) {
+        Main.clearScrean();
         int playerAttackValue = getAttack()*2 - enemy.getDefense()/2;
         int playerDefenseValue = getDefense()/2 - enemy.getAttack()*2;
         int enemyAttackValue = enemy.getAttack()*2 - getDefense()/2;

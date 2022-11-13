@@ -15,14 +15,22 @@ public class KillGivenAmountOfEnemies extends Quest {
     public KillGivenAmountOfEnemies() {
     }
 
-    public List<Enemy> createEnemies (Enemy enemieType  , int ammountOfEnemies){
+    public List<Enemy> createEnemies(Enemy enemieType, int ammountOfEnemies) {
         List<Enemy> listOfEnemies = new ArrayList<>();
         for (int i = 0; i < ammountOfEnemies; i++) {
-            var enemy = enemieType;
-            listOfEnemies.add(enemy);
-            }
-        return listOfEnemies;
+            listOfEnemies.add(enemieType);
         }
-
+        return listOfEnemies;
     }
 
+
+    @Override
+    public int getReward() {
+        return super.getReward();
+    }
+
+    @Override
+    public void setReward(int reward) {
+        super.setReward(reward);
+    }
+}
